@@ -1,278 +1,177 @@
-# Create a GitHub Action Using JavaScript
+# Custom Reviewers Branch Action
 
-[![GitHub Super-Linter](https://github.com/actions/javascript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/actions/javascript-action/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/actions/javascript-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/javascript-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/actions/javascript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/javascript-action/actions/workflows/codeql-analysis.yml)
+[![GitHub Super-Linter](https://github.com/firrasaltaher/gh-custom-reviewers-branch-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
+![CI](https://github.com/firrasaltaher/gh-custom-reviewers-branch-action/actions/workflows/ci.yml/badge.svg)
+[![Check dist/](https://github.com/firrasaltaher/gh-custom-reviewers-branch-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/firrasaltaher/gh-custom-reviewers-branch-action/actions/workflows/check-dist.yml)
+[![CodeQL](https://github.com/firrasaltaher/gh-custom-reviewers-branch-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/firrasaltaher/gh-custom-reviewers-branch-action/actions/workflows/codeql-analysis.yml)
 [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
 
-Use this template to bootstrap the creation of a JavaScript action. :rocket:
+A GitHub Action that allows you to assign custom reviewers to pull requests
+based on the target branch. This action enables you to configure different
+reviewers for different branches, making it perfect for organizations with
+branch-specific review requirements.
 
-This template includes compilation support, tests, a validation workflow,
-publishing, and versioning guidance.
+## Features
 
-If you are new, there's also a simpler introduction in the
-[Hello world JavaScript action repository](https://github.com/actions/hello-world-javascript-action).
-
-## Create Your Own Action
-
-To create your own action, you can use this repository as a template! Just
-follow the below instructions:
-
-1. Click the **Use this template** button at the top of the repository
-1. Select **Create a new repository**
-1. Select an owner and name for your new repository
-1. Click **Create repository**
-1. Clone your new repository
-
-> [!IMPORTANT]
->
-> Make sure to remove or update the [`CODEOWNERS`](./CODEOWNERS) file! For
-> details on how to use this file, see
-> [About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
-
-## Initial Setup
-
-After you've cloned the repository to your local machine or codespace, you'll
-need to perform some initial setup steps before you can develop your action.
-
-> [!NOTE]
->
-> You'll need to have a reasonably modern version of
-> [Node.js](https://nodejs.org) handy (20.x or later should work!). If you are
-> using a version manager like [`nodenv`](https://github.com/nodenv/nodenv) or
-> [`fnm`](https://github.com/Schniz/fnm), this template has a `.node-version`
-> file at the root of the repository that can be used to automatically switch to
-> the correct version when you `cd` into the repository. Additionally, this
-> `.node-version` file is used by GitHub Actions in any `actions/setup-node`
-> actions.
-
-1. :hammer_and_wrench: Install the dependencies
-
-   ```bash
-   npm install
-   ```
-
-1. :building_construction: Package the JavaScript for distribution
-
-   ```bash
-   npm run bundle
-   ```
-
-1. :white_check_mark: Run the tests
-
-   ```bash
-   $ npm test
-
-   PASS  ./index.test.js
-     ✓ throws invalid number (3ms)
-     ✓ wait 500 ms (504ms)
-     ✓ test runs (95ms)
-
-   ...
-   ```
-
-## Update the Action Metadata
-
-The [`action.yml`](action.yml) file defines metadata about your action, such as
-input(s) and output(s). For details about this file, see
-[Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
-
-When you copy this repository, update `action.yml` with the name, description,
-inputs, and outputs for your action.
-
-## Update the Action Code
-
-The [`src/`](./src/) directory is the heart of your action! This contains the
-source code that will be run when your action is invoked. You can replace the
-contents of this directory with your own code.
-
-There are a few things to keep in mind when writing your action code:
-
-- Most GitHub Actions toolkit and CI/CD operations are processed asynchronously.
-  In `main.js`, you will see that the action is run in an `async` function.
-
-  ```javascript
-  const core = require('@actions/core')
-  //...
-
-  async function run() {
-    try {
-      //...
-    } catch (error) {
-      core.setFailed(error.message)
-    }
-  }
-  ```
-
-  For more information about the GitHub Actions toolkit, see the
-  [documentation](https://github.com/actions/toolkit/blob/main/README.md).
-
-So, what are you waiting for? Go ahead and start customizing your action!
-
-1. Create a new branch
-
-   ```bash
-   git checkout -b releases/v1
-   ```
-
-1. Replace the contents of `src/` with your action code
-1. Add tests to `__tests__/` for your source code
-1. Format, test, and build the action
-
-   ```bash
-   npm run all
-   ```
-
-   > This step is important! It will run [`rollup`](https://rollupjs.org/) to
-   > build the final JavaScript action code with all dependencies included. If
-   > you do not run this step, your action will not work correctly when it is
-   > used in a workflow.
-
-1. (Optional) Test your action locally
-
-   The [`@github/local-action`](https://github.com/github/local-action) utility
-   can be used to test your action locally. It is a simple command-line tool
-   that "stubs" (or simulates) the GitHub Actions Toolkit. This way, you can run
-   your JavaScript action locally without having to commit and push your changes
-   to a repository.
-
-   The `local-action` utility can be run in the following ways:
-   - Visual Studio Code Debugger
-
-     Make sure to review and, if needed, update
-     [`.vscode/launch.json`](./.vscode/launch.json)
-
-   - Terminal/Command Prompt
-
-     ```bash
-     # npx @github/local action <action-yaml-path> <entrypoint> <dotenv-file>
-     npx @github/local-action . src/main.js .env
-     ```
-
-   You can provide a `.env` file to the `local-action` CLI to set environment
-   variables used by the GitHub Actions Toolkit. For example, setting inputs and
-   event payload data used by your action. For more information, see the example
-   file, [`.env.example`](./.env.example), and the
-   [GitHub Actions Documentation](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables).
-
-1. Commit your changes
-
-   ```bash
-   git add .
-   git commit -m "My first action is ready!"
-   ```
-
-1. Push them to your repository
-
-   ```bash
-   git push -u origin releases/v1
-   ```
-
-1. Create a pull request and get feedback on your action
-1. Merge the pull request into the `main` branch
-
-Your action is now published! :rocket:
-
-For information about versioning your action, see
-[Versioning](https://github.com/actions/toolkit/blob/main/docs/action-versioning.md)
-in the GitHub Actions toolkit.
-
-## Validate the Action
-
-You can now validate the action by referencing it in a workflow file. For
-example, [`ci.yml`](./.github/workflows/ci.yml) demonstrates how to reference an
-action in the same repository.
-
-```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v4
-
-  - name: Test Local Action
-    id: test-action
-    uses: ./
-    with:
-      milliseconds: 1000
-
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
-```
-
-For example workflow runs, check out the
-[Actions tab](https://github.com/actions/javascript-action/actions)! :rocket:
+- ✅ **Branch-specific reviewer assignment**: Configure different reviewers for
+  different branches
+- ✅ **Individual and team reviewers**: Support for both individual GitHub users
+  and team reviewers
+- ✅ **Flexible configuration**: Easy to set up with simple inputs
+- ✅ **Automatic detection**: Only runs on pull request events
+- ✅ **Safe operation**: Validates inputs and handles errors gracefully
 
 ## Usage
 
-After testing, you can create version tag(s) that developers can use to
-reference different stable versions of your action. For more information, see
-[Versioning](https://github.com/actions/toolkit/blob/main/docs/action-versioning.md)
-in the GitHub Actions toolkit.
-
-To include the action in a workflow in another repository, you can use the
-`uses` syntax with the `@` symbol to reference a specific branch, tag, or commit
-hash.
+### Basic Example
 
 ```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v4
+name: Assign Custom Reviewers
 
-  - name: Test Local Action
-    id: test-action
-    uses: actions/javascript-action@v1 # Commit with the `v1` tag
-    with:
-      milliseconds: 1000
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
 
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
+jobs:
+  assign-reviewers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign reviewers for main branch
+        if: github.event.pull_request.base.ref == 'main'
+        uses: firrasaltaher/gh-custom-reviewers-branch-action@v1
+        with:
+          branch: 'main'
+          reviewers: 'senior-dev1,senior-dev2,architect'
+          team-reviewers: 'core-team,security-team'
+          token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-## Dependency License Management
+### Multiple Branch Configuration
 
-This template includes a GitHub Actions workflow,
-[`licensed.yml`](./.github/workflows/licensed.yml), that uses
-[Licensed](https://github.com/licensee/licensed) to check for dependencies with
-missing or non-compliant licenses. This workflow is initially disabled. To
-enable the workflow, follow the below steps.
+```yaml
+name: Branch-specific Reviewers
 
-1. Open [`licensed.yml`](./.github/workflows/licensed.yml)
-1. Uncomment the following lines:
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
 
-   ```yaml
-   # pull_request:
-   #   branches:
-   #     - main
-   # push:
-   #   branches:
-   #     - main
-   ```
+jobs:
+  assign-reviewers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign reviewers for main branch
+        if: github.event.pull_request.base.ref == 'main'
+        uses: firrasaltaher/gh-custom-reviewers-branch-action@v1
+        with:
+          branch: 'main'
+          reviewers: 'senior-dev1,senior-dev2'
+          team-reviewers: 'core-team'
 
-1. Save and commit the changes
+      - name: Assign reviewers for develop branch
+        if: github.event.pull_request.base.ref == 'develop'
+        uses: firrasaltaher/gh-custom-reviewers-branch-action@v1
+        with:
+          branch: 'develop'
+          reviewers: 'dev1,dev2'
+          team-reviewers: 'dev-team'
 
-Once complete, this workflow will run any time a pull request is created or
-changes pushed directly to `main`. If the workflow detects any dependencies with
-missing or non-compliant licenses, it will fail the workflow and provide details
-on the issue(s) found.
-
-### Updating Licenses
-
-Whenever you install or update dependencies, you can use the Licensed CLI to
-update the licenses database. To install Licensed, see the project's
-[Readme](https://github.com/licensee/licensed?tab=readme-ov-file#installation).
-
-To update the cached licenses, run the following command:
-
-```bash
-licensed cache
+      - name: Assign reviewers for release branches
+        if: startsWith(github.event.pull_request.base.ref, 'release/')
+        uses: firrasaltaher/gh-custom-reviewers-branch-action@v1
+        with:
+          branch: ${{ github.event.pull_request.base.ref }}
+          reviewers: 'release-manager,qa-lead'
+          team-reviewers: 'release-team'
 ```
 
-To check the status of cached licenses, run the following command:
+## Inputs
 
-```bash
-licensed status
+| Input            | Description                                                   | Required | Default               |
+| ---------------- | ------------------------------------------------------------- | -------- | --------------------- |
+| `branch`         | The target branch to match for adding reviewers               | ✅ Yes   |                       |
+| `reviewers`      | Comma-separated list of GitHub usernames to add as reviewers  | No\*     |                       |
+| `team-reviewers` | Comma-separated list of GitHub team slugs to add as reviewers | No\*     |                       |
+| `token`          | GitHub token with appropriate permissions to request reviews  | No       | `${{ github.token }}` |
+
+\*At least one of `reviewers` or `team-reviewers` must be provided.
+
+## Outputs
+
+| Output            | Description                                                    |
+| ----------------- | -------------------------------------------------------------- |
+| `reviewers-added` | Comma-separated list of reviewers that were successfully added |
+| `teams-added`     | Comma-separated list of teams that were successfully added     |
+
+## Requirements
+
+### Permissions
+
+The action requires the following permissions:
+
+```yaml
+permissions:
+  pull-requests: write # Required to add reviewers to pull requests
 ```
+
+### Token Permissions
+
+When using a custom token (instead of the default `GITHUB_TOKEN`), ensure it has
+the following scopes:
+
+- `repo` (for private repositories)
+- `public_repo` (for public repositories)
+
+## How It Works
+
+1. **Event Detection**: The action only runs on `pull_request` and
+   `pull_request_target` events
+1. **Branch Matching**: Compares the pull request's target branch with the
+   configured `branch` input
+1. **Reviewer Assignment**: If branches match, adds the specified reviewers
+   and/or team reviewers
+1. **Output Generation**: Provides lists of successfully added reviewers and
+   teams
+
+## Example Scenarios
+
+### Scenario 1: Different Review Requirements by Branch
+
+```yaml
+# main branch: Requires senior developers and security team
+- uses: firrasaltaher/gh-custom-reviewers-branch-action@v1
+  with:
+    branch: 'main'
+    reviewers: 'senior-dev1,senior-dev2'
+    team-reviewers: 'security-team'
+
+# develop branch: Requires any team member
+- uses: firrasaltaher/gh-custom-reviewers-branch-action@v1
+  with:
+    branch: 'develop'
+    reviewers: 'dev1,dev2,dev3'
+```
+
+### Scenario 2: Feature Branch Specific Reviews
+
+```yaml
+# feature branches: Requires feature team review
+- uses: firrasaltaher/gh-custom-reviewers-branch-action@v1
+  if: startsWith(github.event.pull_request.base.ref, 'feature/')
+  with:
+    branch: ${{ github.event.pull_request.base.ref }}
+    team-reviewers: 'feature-team'
+```
+
+## Error Handling
+
+The action handles various error conditions gracefully:
+
+- **Missing inputs**: Fails with clear error message if required inputs are
+  missing
+- **API errors**: Catches and reports GitHub API errors
+- **Non-PR events**: Silently skips execution on non-pull request events
+- **Branch mismatch**: Logs information and skips reviewer assignment
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.

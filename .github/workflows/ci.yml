@@ -4,9 +4,11 @@ on:
   pull_request:
     branches:
       - main
+      - test
   push:
     branches:
       - main
+      - test
 
 permissions:
   contents: read
@@ -57,7 +59,8 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
+          branch: main
+          reviewers: firrasaltaher, copilot
 
       - name: Print Output
         id: output

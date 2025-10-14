@@ -1,23 +1,34 @@
-name: The name of your action here
-description: Provide a description here
-author: Your name or organization here
+name: Custom Reviewers Branch Action
+description: Add custom reviewers to pull requests based on the target branch
+author: Firras Altaher
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: heart
-  color: red
+  icon: users
+  color: blue
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: Your input description here
+  branch:
+    description: The target branch to match for adding reviewers
     required: true
-    default: '1000'
+  reviewers:
+    description: Comma-separated list of GitHub usernames to add as reviewers
+    required: false
+  team-reviewers:
+    description: Comma-separated list of GitHub team slugs to add as reviewers
+    required: false
+  token:
+    description: GitHub token with appropriate permissions to request reviews
+    required: false
+    default: ${{ github.token }}
 
 # Define your outputs here.
 outputs:
-  time:
-    description: Your output description here
+  reviewers-added:
+    description: List of reviewers that were successfully added
+  teams-added:
+    description: List of teams that were successfully added
 
 runs:
   using: node24
