@@ -31293,19 +31293,24 @@ async function run() {
       return
     }
 
-    // Parse reviewers
-    const reviewers = reviewersInput
-      ? reviewersInput
-          .split(',')
-          .map((r) => r.trim())
-          .filter((r) => r)
-      : [];
-    const teamReviewers = teamReviewersInput
-      ? teamReviewersInput
-          .split(',')
-          .map((t) => t.trim())
-          .filter((t) => t)
-      : [];
+    /**
+     * Parses a comma-separated string input into an array of trimmed, non-empty strings.
+     *
+     * @param {string} input
+     * @returns {string[]}
+     */
+    function parseInputList(input) {
+      return input
+        ? input
+            .split(',')
+            .map((item) => item.trim())
+            .filter((item) => item)
+        : []
+    }
+
+    // Parse reviewers and team reviewers
+    const reviewers = parseInputList(reviewersInput);
+    const teamReviewers = parseInputList(teamReviewersInput);
 
     coreExports.info(`Reviewers to add: ${reviewers.join(', ')}`);
     if (teamReviewers.length > 0) {
